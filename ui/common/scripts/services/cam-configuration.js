@@ -10,7 +10,7 @@ var defaultConfig = {
     'short': 'LL'
   },
   'locales': {
-    'availableLocales': ['en'],
+    'availableLocales': ['en','ru'],
     'fallbackLocale': 'en'
   }
 };

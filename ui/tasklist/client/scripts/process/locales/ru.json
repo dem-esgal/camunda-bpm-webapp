@@ -1,0 +1,16 @@
+{
+  "PROCESS_NAME":
+  "Наименование задачи",
+  "PROCESS_START_OK":
+  "Задача успешно начата",
+  "PROCESS_START_ERROR":
+  "Во время запуска задачи произошла ошибка",
+  "SEARCH_PROCESS_BY_NAME":
+  "Поиск по наименованию БП. Чувствителен к регистру",
+  "NO_PROCESS_DEFINITION_AVAILABLE":
+  "Отсутствуют описания процессов",
+  "START_PROCESS":
+  "Начать задачу",
+  "CLICK_PROCESS_TO_START":
+  "Нажмите на БП, чтобы стартовать"
+}

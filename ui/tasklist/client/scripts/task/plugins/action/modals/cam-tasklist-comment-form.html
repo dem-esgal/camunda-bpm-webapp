@@ -21,14 +21,12 @@
       <div class="col-xs-12">
         <button class="btn btn-xs btn-link"
                 type="button"
-                ng-click="$dismiss()"
-                translate="CLOSE">Close</button>
+                ng-click="$dismiss()">{{'CLOSE'| translate}}</button>
 
         <button class="btn btn-primary"
                 type="submit"
                 ng-disabled="!comment.message"
-                ng-click="submit()"
-                translate="SAVE">Save</button>
+                ng-click="submit()">{{'SAVE'| translate}}</button>
 
       </div>
     </div>

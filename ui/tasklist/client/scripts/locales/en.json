@@ -1,9 +1,6 @@
 {
   "VARIABLE_VALUE":
                   "Value",
-
-
-
   "dateLocales": {
     "months": [
       "January",
@@ -97,7 +94,7 @@
   },
 
   "CREATE_TASK" :
-        "Create task",
+        "Create note",
 
   "NEW_TASK_NAME" :
         "Name",
@@ -112,5 +109,7 @@
         "Description",
 
    "TASK_SAVE_ERROR":
-        "Something went wrong while saving the task"
+        "Something went wrong while saving the task",
+
+  "CLOSE_": "Close"
 }

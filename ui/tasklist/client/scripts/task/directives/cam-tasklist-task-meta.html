@@ -97,30 +97,28 @@
 
     <a href
        class="claim"
-       ng-click="claim()"
-       translate="CLAIM_TASK">Claim</a>
+       ng-click="claim()">{{'CLAIM_TASK' | translate}}</a>
   </li>
 
   <li class="assignee"
       ng-if="task.assignee">
-    <span cam-widget-inline-field
-          tabindex="0"
-          ng-keydown="editAssignee($event)"
-          class="set-value"
-          type="text"
-          validate="validateUser(this)"
-          change="assign(this)"
-          on-start-editing="startEditingAssignee(this)"
-          on-cancel-editing="cancelEditingAssignee(this)"
-          value="assignee.id">
 
       <span tooltip-placement="top"
             tooltip="{{ 'ASSIGNEE' | translate }}"
-            class="glyphicon glyphicon-user"></span>
-      <span ng-if="assignee.firstName || assignee.lastName">{{ assignee.firstName }} {{ assignee.lastName }}</span>
+            class="glyphicon glyphicon-user">
+
+      </span>
+    <span ng-if="!editingState.assignee" ng-click="setEditableAssignee()">
+      <span ng-if="(assignee.firstName || assignee.lastName)">{{ assignee.firstName }} {{ assignee.lastName }}</span>
       <span ng-if="!(assignee.firstName || assignee.lastName)">{{ assignee.id }}</span>
     </span>
-
+    <span ng-if="editingState.assignee">
+      <select ng-model="assignee.id"
+              ng-options="item.id as item.name for item in userList">
+      </select>
+      <span ng-click="assign()">accept</span>
+      <span ng-click="resetAssignee()">reject</span>
+    </span>
     <a href
        ng-if="isAssignee && !editingState.assignee"
        tooltip-placement="top"

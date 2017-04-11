@@ -1,58 +1,51 @@
-  'use strict';
+'use strict';
 
-  var TasklistApp = (function() {
+var TasklistApp = (function () {
+  function TasklistApp() {
+    this.refreshProvider = null;
+  }
+  return TasklistApp;
+})();
 
-    function TasklistApp() {
-
-      this.refreshProvider = null;
-
-    }
-
-    return TasklistApp;
-
-  })();
-
-  module.exports = [
-    'camAPI',
-    'configuration',
-    '$window',
-    '$scope',
-    function(
-    camAPI,
-    configuration,
-    $window,
-    $scope
-  ) {
+module.exports = [
+  'camAPI',
+  'configuration',
+  '$window',
+  '$scope',
+  function (camAPI,
+            configuration,
+            $window,
+            $scope) {
 
     // create a new tasklistApp
-      $scope.tasklistApp = new TasklistApp();
-      $scope.appVendor = configuration.getAppVendor();
-      $scope.appName = configuration.getAppName();
+    $scope.tasklistApp = new TasklistApp();
+    $scope.appVendor = configuration.getAppVendor();
+    $scope.appName = configuration.getAppName();
 
     // doing so, there's no `{{ appVendor }} {{ appName }}`
     // visible in the title tag as the app loads
-      var htmlTitle = document.querySelector('head > title');
-      htmlTitle.textContent = $scope.appVendor + ' ' + $scope.appName;
+    var htmlTitle = document.querySelector('head > title');
+    htmlTitle.textContent = $scope.appVendor + ' ' + $scope.appName;
 
-      function getUserProfile(auth) {
-        if (!auth || !auth.name) {
-          $scope.userFullName = null;
-          return;
-        }
-
-        var userService = camAPI.resource('user');
-        userService.profile(auth.name, function(err, info) {
-          if (err) {
-            $scope.userFullName = null;
-            throw err;
-          }
-          $scope.userFullName = info.firstName + ' ' + info.lastName;
-        });
+    function getUserProfile(auth) {
+      if (!auth || !auth.name) {
+        $scope.userFullName = null;
+        return;
       }
 
-      $scope.$on('authentication.changed', function(ev, auth) {
-        getUserProfile(auth);
+      var userService = camAPI.resource('user');
+      userService.profile(auth.name, function (err, info) {
+        if (err) {
+          $scope.userFullName = null;
+          throw err;
+        }
+        $scope.userFullName = info.firstName + ' ' + info.lastName;
       });
+    }
 
-      getUserProfile($scope.authentication);
-    }];
+    $scope.$on('authentication.changed', function (ev, auth) {
+      getUserProfile(auth);
+    });
+
+    getUserProfile($scope.authentication);
+  }];

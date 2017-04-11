@@ -40,7 +40,7 @@
   </div>
   <div ng-show="selectedTab === 'deserialized'" class="tab-content">
     <div class="alert alert-warning"
-         role="alert" 
+         role="alert"
          ng-show="deserializationError">
       <strong>{{ 'DESERIALIZATION_ERROR' | translate }}</strong>:
       {{ deserializationError }}
@@ -61,8 +61,7 @@
     <div class="col-xs-12">
       <button class="btn btn-xs btn-link"
               type="submit"
-              ng-click="$dismiss()"
-              translate="CLOSE">Close</button>
+              ng-click="$dismiss()">{{'CLOSE'| translate}}</button>
     </div>
   </div>
 </div>

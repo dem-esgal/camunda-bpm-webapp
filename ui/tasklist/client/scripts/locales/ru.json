@@ -1,0 +1,101 @@
+{
+  "VARIABLE_VALUE": "Значение",
+  "dateLocales": {
+    "months": [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь"
+    ],
+    "monthsShort": [
+      "Янв",
+      "Фев",
+      "Мар",
+      "Апр",
+      "Май",
+      "Июн",
+      "Июл",
+      "Авг",
+      "Сен",
+      "Окт",
+      "Ноя",
+      "Дек"
+    ],
+    "weekdays": [
+      "Воскресенье",
+      "Понедельник",
+      "Вторник",
+      "Среда",
+      "Четверг",
+      "Пятница",
+      "Суббота"
+    ],
+    "weekdaysShort": [
+      "Пнд",
+      "Втр",
+      "Срд",
+      "Чет",
+      "Птн",
+      "Сбт",
+      "Вск"
+    ],
+    "weekdaysMin": [
+      "Пн",
+      "Вт",
+      "Ср",
+      "Чт",
+      "Пт",
+      "Сб",
+      "Вс"
+    ],
+    "longDateFormat": {
+      "LT": "HH:mm",
+      "L": "DD/MM/YYYY",
+      "LL": "D MMMM YYYY",
+      "LLL": "D MMMM YYYY LT",
+      "LLLL": "dddd, D MMMM YYYY LT"
+    },
+    "calendar": {
+      "sameDay": "[Today at] LT",
+      "nextDay": "[Tomorrow at] LT",
+      "nextWeek": "dddd [at] LT",
+      "lastDay": "[Yesterday at] LT",
+      "lastWeek": "[Last] dddd [at] LT",
+      "sameElse": "L"
+    },
+    "relativeTime": {
+      "future": "в %s",
+      "past": "%s назад",
+      "s": "несколько секунд",
+      "m": "минута",
+      "mm": "%d минут",
+      "h": "час",
+      "hh": "%d часов",
+      "d": "день",
+      "dd": "%d дней",
+      "M": "месяц",
+      "MM": "%d месяцев",
+      "y": "год",
+      "yy": "%d лет"
+    },
+    "week": {
+      "dow": 1,
+      "doy": 4
+    }
+  },
+  "CREATE_TASK": "Создать заметку",
+  "NEW_TASK_NAME": "Наименование",
+  "NEW_TASK_ASSIGNEE": "Исполнитель",
+  "NEW_TASK_TENANT_ID": "ID Владельца",
+  "NEW_TASK_DESCRIPTION": "Описание",
+  "TASK_SAVE_ERROR": "Во время сохранения заметки что-то пошло не так",
+  "CLOSE_": "Закрыть"
+}

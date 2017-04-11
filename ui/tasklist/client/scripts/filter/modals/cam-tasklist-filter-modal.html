@@ -58,22 +58,23 @@
 
           <button class="btn btn-link"
                   type="button"
-                  ng-click="$dismiss()"
-                  translate="CLOSE">Close</button>
+                  ng-click="$dismiss()">
+            {{'CLOSE'| translate}}</button>
 
           <button ng-if="!deletion && (!filter.id || (filter.id && accesses.update))"
                   class="btn btn-primary"
                   type="submit"
                   ng-disabled="!isValid()"
-                  ng-click="submit()"
-                  translate="SAVE">Save</button>
+                  ng-click="submit()">
+            {{'SAVE'| translate}}</button>
 
 
           <button ng-if="deletion"
                   class="btn btn-primary"
                   type="submit"
                   ng-click="delete()"
-                  translate="DELETE">Delete</button>
+                  translate="DELETE">
+            Delete</button>
         </div>
       </div>
     </div>

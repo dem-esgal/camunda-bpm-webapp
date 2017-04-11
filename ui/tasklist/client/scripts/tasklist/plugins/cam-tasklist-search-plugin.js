@@ -121,6 +121,9 @@ var Controller = [
     searchData.observe('currentFilter', function(filter) {
       angular.forEach($scope.types, function(ea) {
         ea.potentialNames = [];
+        if (!filter) {
+          return;
+        }
         for(var i = 0; i < (filter.properties.variables && filter.properties.variables.length) || 0; i++) {
           var v = filter.properties.variables[i];
           ea.potentialNames.push({

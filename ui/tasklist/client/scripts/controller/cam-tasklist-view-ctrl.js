@@ -4,7 +4,7 @@ var angular = require('camunda-commons-ui/vendor/angular');
 
 function getRefreshProvider(tasklistData) {
   return {
-    refreshTaskList : function() {
+    refreshTaskList: function () {
       tasklistData.changed('taskList');
     }
   };
@@ -18,15 +18,13 @@ module.exports = [
   'search',
   'dataDepend',
   'camAPI',
-  function(
-    $scope,
-    $q,
-    $location,
-    $interval,
-    search,
-    dataDepend,
-    camAPI
-  ) {
+  function ($scope,
+            $q,
+            $location,
+            $interval,
+            search,
+            dataDepend,
+            camAPI) {
 
     function getPropertyFromLocation(property) {
       var search = $location.search() || {};
@@ -37,7 +35,7 @@ module.exports = [
       search.updateSilently(params);
     }
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $scope.tasklistApp.refreshProvider = null;
     });
 
@@ -65,16 +63,32 @@ module.exports = [
     /**
      * Provides the list of filters
      */
-    tasklistData.provide('filters', [ function() {
+    tasklistData.provide('filters', [function () {
       var deferred = $q.defer();
 
       Filter.list({
         itemCount: false,
         resoureType: 'Task'
-      }, function(err, res) {
-        if(err) {
+      }, function (err, res) {
+       /* res = [{
+          id: undefined,
+          name: "My tasks",
+          owner: null,
+          properties: {
+            color: "#555555",
+            priority: 0,
+            refresh: false,
+            showUndefinedVariable: false
+          },
+          query: {
+            caseInstanceVariables: [],
+            processVariables: [],
+            taskVariables: []
+          },
+          resourceType: "Task"
+        }];*/
+        if (err) {
           deferred.reject(err);
-
         }
         else {
           deferred.resolve(res);
@@ -84,10 +98,10 @@ module.exports = [
       return deferred.promise;
     }]);
 
-    tasklistData.provide('currentFilter', ['filters', function(filters) {
+    tasklistData.provide('currentFilter', ['filters', function (filters) {
 
       var focused,
-          filterId = getPropertyFromLocation('filter');
+        filterId = getPropertyFromLocation('filter');
 
       for (var i = 0, filter; (filter = filters[i]); i++) {
 
@@ -95,13 +109,13 @@ module.exports = [
           focused = filter;
           break;
         }
-          // auto focus first filter
-        if(!focused || filter.properties.priority < focused.properties.priority) {
+        // auto focus first filter
+        if (!focused || filter.properties.priority < focused.properties.priority) {
           focused = filter;
         }
       }
 
-      if(currentFilter && currentFilter.id !== focused.id) {
+      if (currentFilter && currentFilter.id !== focused.id) {
         var currentPage = getPropertyFromLocation('page');
         if (currentPage) {
           updateSilently({
@@ -110,7 +124,7 @@ module.exports = [
         }
       }
 
-      if(focused && focused.id !== filterId) {
+      if (focused && focused.id !== filterId) {
         updateSilently({
           filter: focused.id
         });
@@ -126,7 +140,7 @@ module.exports = [
       caseInstanceVariables: []
     });
 
-    tasklistData.provide('taskListQuery', ['currentFilter', 'searchQuery', function(currentFilter, searchQuery) {
+    tasklistData.provide('taskListQuery', ['currentFilter', 'searchQuery', function (currentFilter, searchQuery) {
       if (!currentFilter) {
         return null;
       }
@@ -155,23 +169,23 @@ module.exports = [
 
     }]);
 
-     /**
-      * Provide the list of tasks
-      */
-    tasklistData.provide('taskList', [ 'taskListQuery', function(taskListQuery) {
+    /**
+     * Provide the list of tasks
+     */
+    tasklistData.provide('taskList', ['taskListQuery', function (taskListQuery) {
       var deferred = $q.defer();
 
-      if(!taskListQuery || taskListQuery.id === null) {
-         // no filter selected
+      if (!taskListQuery || taskListQuery.id === null) {
+        // no filter selected
         deferred.resolve({
           count: 0,
-          _embedded : {}
+          _embedded: {}
         });
       }
       else {
-         // filter selected
-        Filter.getTasks(angular.copy(taskListQuery), function(err, res) {
-          if(err) {
+        // filter selected
+        Filter.getTasks(angular.copy(taskListQuery), function (err, res) {
+          if (err) {
             deferred.reject(err);
           }
           else {
@@ -182,27 +196,27 @@ module.exports = [
       return deferred.promise;
     }]);
 
-   /**
+    /**
      * Provide current task id
      */
-    tasklistData.provide('taskId', { 'taskId' : taskId });
+    tasklistData.provide('taskId', {'taskId': taskId});
 
 
     /**
      * Provide the current task or the value 'null' in case no task is selected
      */
-    tasklistData.provide('task', ['taskId', function(task) {
+    tasklistData.provide('task', ['taskId', function (task) {
 
       var deferred = $q.defer();
 
       var taskId = task.taskId;
 
-      if(typeof taskId !== 'string') {
+      if (typeof taskId !== 'string') {
         deferred.resolve(null);
       }
       else {
-        Task.get(taskId, function(err, res) {
-          if(err) {
+        Task.get(taskId, function (err, res) {
+          if (err) {
             deferred.reject(err);
           }
           else {
@@ -218,7 +232,7 @@ module.exports = [
     // observe //////////////////////////////////////////////////////////////////////////////
 
 
-    tasklistData.observe('currentFilter', function(_currentFilter) {
+    tasklistData.observe('currentFilter', function (_currentFilter) {
       currentFilter = _currentFilter;
     });
 
@@ -227,16 +241,16 @@ module.exports = [
      * (such as claims) are represented in realtime
      */
     var intervalPromise;
-    tasklistData.observe('currentFilter', function(currentFilter) {
+    tasklistData.observe('currentFilter', function (currentFilter) {
       // stop current refresh
-      if(intervalPromise) {
+      if (intervalPromise) {
         $interval.cancel(intervalPromise);
       }
 
-      if(currentFilter && currentFilter.properties.refresh) {
-        intervalPromise = $interval(function() {
+      if (currentFilter && currentFilter.properties.refresh) {
+        intervalPromise = $interval(function () {
 
-          if($scope.tasklistApp && $scope.tasklistApp.refreshProvider) {
+          if ($scope.tasklistApp && $scope.tasklistApp.refreshProvider) {
             $scope.tasklistApp.refreshProvider.refreshTaskList();
 
           }
@@ -253,7 +267,7 @@ module.exports = [
     /**
      * Update task if location changes
      */
-    $scope.$on('$routeChanged', function() {
+    $scope.$on('$routeChanged', function () {
       var oldTaskId = taskId;
       var oldDetailsTab = detailsTab;
 
@@ -261,7 +275,7 @@ module.exports = [
       detailsTab = getPropertyFromLocation('detailsTab');
 
       if (oldTaskId !== taskId || oldDetailsTab === detailsTab) {
-        tasklistData.set('taskId', { 'taskId' : taskId });
+        tasklistData.set('taskId', {'taskId': taskId});
       }
 
       currentFilter = null;

@@ -1,3 +1,5 @@
+
+
 # camunda Webapp
 
 This is the camunda BPM webapplication source.
@@ -151,3 +153,10 @@ In place of a guide, just follow the formatting of existing code (and / or use t
 ## License
 
 Unless otherwise specified this project is licensed under [Apache License Version 2.0](./LICENSE).
+
+instal mvs 2013
+set config npm to msvs_version = 2013 globaly 
+npm-install camunda-bpm-sdk-js (from sources)
+npm install bootstrap
+npm install dmn-js
+npm install diagram-js (from sources)-> move to \camunda-commons-ui\node_modules\dmn-js\node_modules

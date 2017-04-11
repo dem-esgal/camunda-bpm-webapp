@@ -10,8 +10,11 @@
       <header class="cell top">
         <div cam-deployments-sorting-choices
              deployments-data="deploymentsData"></div>
+        <button class="btn btn-default"
+                ng-click="uploadWar()">
+          Add
+        </button>
       </header>
-
       <div class="cell content">
 
         <view ng-repeat="deploymentsPlugin in deploymentsPlugins"

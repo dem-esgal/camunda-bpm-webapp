@@ -6,8 +6,7 @@
   <parent>
     <groupId>org.camunda.bpm</groupId>
     <artifactId>camunda-database-settings</artifactId>
-    <version>7.6.3-SNAPSHOT</version>
-    <relativePath>../camunda-bpm-platform/database</relativePath>
+    <version>7.6.0</version>
   </parent>
 
   <artifactId>camunda-webapp</artifactId>
@@ -125,6 +124,39 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>jaxrs-api</artifactId>
+      <version>2.3.5.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+      <version>3.0.9.Final</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scannotation</groupId>
+      <artifactId>scannotation</artifactId>
+      <version>1.0.3</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -271,7 +303,6 @@
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-jaxrs</artifactId>
-          <scope>runtime</scope>
         </dependency>
         <dependency>
           <groupId>org.camunda.bpm</groupId>
@@ -870,6 +901,7 @@
                       <arg value="node_modules\.bin\grunt.cmd" />
                       <arg value="build" />
                       <arg value="--color=false" />
+                      <arg value="--force"/>
                     </exec>
                   </target>
                 </configuration>

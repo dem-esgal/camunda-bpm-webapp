@@ -11,16 +11,14 @@ module.exports = [
   'dataDepend',
   'page',
   'camAPI',
-  function(
-    $scope,
-    $q,
-    $location,
-    $timeout,
-    search,
-    dataDepend,
-    page,
-    camAPI
-  ) {
+  function ($scope,
+            $q,
+            $location,
+            $timeout,
+            search,
+            dataDepend,
+            page,
+            camAPI) {
     $scope.$root.showBreadcrumbs = true;
 
     page.breadcrumbsClear();
@@ -29,15 +27,14 @@ module.exports = [
 
     // utilities /////////////////////////////////////////////////////////////////
 
-    var updateSilently = function(params) {
+    var updateSilently = function (params) {
       search.updateSilently(params);
     };
 
-    var getPropertyFromLocation = function(property) {
+    var getPropertyFromLocation = function (property) {
       var search = $location.search() || {};
       return search[property] || null;
     };
-
 
     // fields ///////////////////////////////////////////////////
 
@@ -46,7 +43,7 @@ module.exports = [
     var Deployment = camAPI.resource('deployment');
 
     // init data depend for deployments data
-    var repositoryData = $scope.repositoryData =  dataDepend.create($scope);
+    var repositoryData = $scope.repositoryData = dataDepend.create($scope);
 
     var deploymentsSortBy = getPropertyFromLocation('deploymentsSortBy');
     var deploymentsSortOrder = getPropertyFromLocation('deploymentsSortOrder');
@@ -55,18 +52,17 @@ module.exports = [
     var resourceId = getPropertyFromLocation('resource');
     var resourceName = getPropertyFromLocation('resourceName');
 
-
     // provide data //////////////////////////////////////////////////////////////////
 
     repositoryData.provide('deploymentsSearchQuery', {});
 
-    repositoryData.provide('deploymentsPagination', function() {
+    repositoryData.provide('deploymentsPagination', function () {
       var deferred = $q.defer();
       deploymentsPage = getPropertyFromLocation('deploymentsPage');
 
       // wait for angular to initialize the controllers, so that the search
       // works properly (for example after a page refresh)
-      $timeout(function() {
+      $timeout(function () {
         deferred.resolve({
           firstResult: ((deploymentsPage || 1) - 1) * maxResults,
           maxResults: maxResults
@@ -76,7 +72,7 @@ module.exports = [
       return deferred.promise;
     });
 
-    repositoryData.provide('deploymentsSorting', function() {
+    repositoryData.provide('deploymentsSorting', function () {
       deploymentsSortBy = getPropertyFromLocation('deploymentsSortBy');
       deploymentsSortOrder = getPropertyFromLocation('deploymentsSortOrder');
       return {
@@ -90,18 +86,19 @@ module.exports = [
     function updateDeploymentsListTop() {
       var filterContainer = angular.element('[ng-controller="camDeploymentsCtrl"] .content view');
       $scope.deploymentsListTop = (
-                                    (filterContainer[0].offsetTop * 1) +
-                                    Math.max(49, (filterContainer.height() || 0))
-                                  ) + 'px';
+          (filterContainer[0].offsetTop * 1) +
+          Math.max(49, (filterContainer.height() || 0))
+        ) + 'px';
     }
+
     $timeout(updateDeploymentsListTop, 200);
 
-    repositoryData.provide('deploymentsQuery', [ 'deploymentsSearchQuery', 'deploymentsPagination', 'deploymentsSorting', function(query, pagination, sorting) {
+    repositoryData.provide('deploymentsQuery', ['deploymentsSearchQuery', 'deploymentsPagination', 'deploymentsSorting', function (query, pagination, sorting) {
       var deferred = $q.defer();
 
       // wait for angular to initialize the controllers, so that the search
       // works properly (for example after a page refresh)
-      $timeout(function() {
+      $timeout(function () {
         query = query || {};
         deferred.resolve(angular.extend({}, query, pagination, sorting));
 
@@ -111,16 +108,16 @@ module.exports = [
       return deferred.promise;
     }]);
 
-    repositoryData.provide([ 'deployments', 'deploymentsCount' ], [ 'deploymentsQuery', function(query) {
+    repositoryData.provide(['deployments', 'deploymentsCount'], ['deploymentsQuery', function (query) {
       var deferred = $q.defer();
 
-      Deployment.list(query, function(err, res) {
+      Deployment.list(query, function (err, res) {
 
         if (err) {
           deferred.reject(err);
         }
         else {
-          deferred.resolve([ res.items, res.count ]);
+          deferred.resolve([res.items, res.count]);
         }
 
       });
@@ -128,7 +125,7 @@ module.exports = [
       return deferred.promise;
     }]);
 
-    repositoryData.provide('currentDeployment', ['deployments', function(deployments) {
+    repositoryData.provide('currentDeployment', ['deployments', function (deployments) {
 
       deployments = deployments || [];
 
@@ -141,8 +138,8 @@ module.exports = [
           focused = deployment;
           break;
         }
-          // auto focus first deployment
-        if(!focused) {
+        // auto focus first deployment
+        if (!focused) {
           focused = deployment;
         }
       }
@@ -174,15 +171,15 @@ module.exports = [
       return angular.copy(focused);
     }]);
 
-    repositoryData.provide('resources', [ 'currentDeployment', function(currentDeployment) {
+    repositoryData.provide('resources', ['currentDeployment', function (currentDeployment) {
       var deferred = $q.defer();
 
-      if(!currentDeployment || currentDeployment.id === null) {
+      if (!currentDeployment || currentDeployment.id === null) {
         deferred.resolve(null);
       }
       else {
-        Deployment.getResources(currentDeployment.id, function(err, res) {
-          if(err) {
+        Deployment.getResources(currentDeployment.id, function (err, res) {
+          if (err) {
             deferred.reject(err);
           }
           else {
@@ -193,7 +190,7 @@ module.exports = [
       return deferred.promise;
     }]);
 
-    repositoryData.provide('resourceId', [ 'resources', function(resources) {
+    repositoryData.provide('resourceId', ['resources', function (resources) {
       resourceId = getPropertyFromLocation('resource');
       resourceName = getPropertyFromLocation('resourceName');
 
@@ -204,7 +201,7 @@ module.exports = [
       }
       else if (resourceName) {
         resources = resources || [];
-        for(var i=0, resource; (resource = resources[i]); i++) {
+        for (var i = 0, resource; (resource = resources[i]); i++) {
           if (resource.name === resourceName) {
             return {
               resourceId: resource.id
@@ -219,20 +216,20 @@ module.exports = [
 
     }]);
 
-    repositoryData.provide('resource', ['resourceId', 'currentDeployment', function(resourceId, deployment) {
+    repositoryData.provide('resource', ['resourceId', 'currentDeployment', function (resourceId, deployment) {
       var deferred = $q.defer();
 
       resourceId = resourceId.resourceId;
 
-      if(typeof resourceId !== 'string') {
+      if (typeof resourceId !== 'string') {
         deferred.resolve(null);
       }
       else if (!deployment || deployment.id === null) {
         deferred.resolve(null);
       }
       else {
-        Deployment.getResource(deployment.id, resourceId, function(err, res) {
-          if(err) {
+        Deployment.getResource(deployment.id, resourceId, function (err, res) {
+          if (err) {
             deferred.reject(err);
           }
           else {
@@ -246,7 +243,7 @@ module.exports = [
     }]);
 
 
-    $scope.$on('$routeChanged', function() {
+    $scope.$on('$routeChanged', function () {
       var oldDeploymentsSortBy = deploymentsSortBy;
       var oldDeploymentsSortOrder = deploymentsSortOrder;
       var oldDeploymentsPage = deploymentsPage;

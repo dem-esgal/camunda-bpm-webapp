@@ -18,8 +18,6 @@ module.exports = [
       $('.tasks-list').toggleClass('show-search');
     };
 
-
-
     function region($event) {
       return $($event.currentTarget).attr('data-region');
     }
@@ -79,9 +77,11 @@ module.exports = [
         $event.preventDefault();
       }
 
-      open('filters');
+      close('filters');
       open('list');
       open('task');
       document.querySelector('.maximize').focus();
     };
+
+    $scope.resetRegions();
   }];
